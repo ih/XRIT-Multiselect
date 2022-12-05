@@ -1,0 +1,7 @@
+{
+  "name": "com.abstractionmachines.xritmultiselect",
+  "version": "0.0.0",
+  "displayName": "XRIT Multiselect",
+  "description": "Select multiple objects, implemented with XR Interaction Toolkit.",
+  "unity": "2021.3"
+}
