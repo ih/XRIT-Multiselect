@@ -5,16 +5,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRMultiselectInteractor : XRDirectInteractor
 {
-    [SerializeField] private GameObject pointer;
+    [SerializeField] private SelectManager _selectManager;
     
-    protected void ActivatePointer()
-    {
-       pointer.SetActive(true); 
-    }
-
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
         base.OnHoverEntered(args);
         Debug.Log("Entered a selectable!");
+        _selectManager.Select(args.interactableObject.transform.gameObject);
     }
 }

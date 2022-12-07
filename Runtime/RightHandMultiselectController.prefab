@@ -182,7 +182,7 @@ MonoBehaviour:
   m_HapticHoverCancelIntensity: 0
   m_HapticHoverCancelDuration: 0
   m_AllowHoverHapticsWhileSelecting: 1
-  pointer: {fileID: 0}
+  _selectManager: {fileID: 4223432130587033160}
 --- !u!1 &7993033099721897231
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 5813967678638043583}
   - component: {fileID: -7649149202768227458}
   - component: {fileID: 5454348691526910091}
+  - component: {fileID: 4223432130587033160}
   m_Layer: 0
   m_Name: RightHandMultiselectController
   m_TagString: Untagged
@@ -466,3 +467,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4223432130587033160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993033099721897231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599d50741c69d2d4b93ef38a41868fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
