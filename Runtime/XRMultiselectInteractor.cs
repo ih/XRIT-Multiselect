@@ -13,7 +13,6 @@ public class XRMultiselectInteractor : XRDirectInteractor
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
         base.OnHoverEntered(args);
-        Debug.Log("Entered a selectable!");
         if (_isSelecting)
         {
             _selectManager.Select(args.interactableObject.transform.gameObject);           
@@ -22,6 +21,7 @@ public class XRMultiselectInteractor : XRDirectInteractor
 
     public void OnTriggerPress()
     {
+        enabled = true;
         GetComponent<Renderer>().enabled = true; 
         _isSelecting = true;
         if (interactablesHovered.Count == 0)
@@ -41,6 +41,7 @@ public class XRMultiselectInteractor : XRDirectInteractor
     public void OnTriggerRelease()
     {
         _isSelecting = false;
+        enabled = false;
         GetComponent<Renderer>().enabled = false;
     }
 }
