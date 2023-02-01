@@ -1,4 +1,7 @@
 {
-	"name": "abstractionmachines.multiselect",
-	"references": ["Unity.XR.Interaction.Toolkit","abstractionmachines.gameobjectutility"]
+  "name": "abstractionmachines.multiselect",
+  "references": [
+    "Unity.XR.Interaction.Toolkit",
+    "abstractionmachines.gameobjectutility"
+  ]
 }

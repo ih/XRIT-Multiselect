@@ -1,41 +1,48 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using AbstractionMachines;
+using UnityEngine;
 
 public class SelectManager : MonoBehaviour
 {
-    [SerializeField] private Color highlightColor = Color.green;
-    private List<GameObject> selectedObjects;
+    [SerializeField]
+    Color highlightColor = Color.green;
 
-    public List<GameObject> SelectedObjects
-    {
-        get => selectedObjects;
-    }
+    public List<GameObject> SelectedObjects { get; private set; }
 
-    private void Start()
+    void Start()
     {
-        selectedObjects = new List<GameObject>();
+        SelectedObjects = new List<GameObject>();
     }
 
     public void Select(GameObject targetObject)
     {
-        selectedObjects.Add(targetObject);
+        ISelectable selectable = targetObject.GetComponent<ISelectable>();
+        if (selectable == null)
+        {
+            return;
+        }
+        SelectedObjects.Add(targetObject);
+        selectable.OnSelect();
         GameObjectUtility.Highlight(targetObject, highlightColor);
     }
 
     public void Deselect(GameObject targetObject)
     {
-        selectedObjects.Remove(targetObject);
+        ISelectable selectable = targetObject.GetComponent<ISelectable>();
+        if (selectable == null)
+        {
+            return;
+        }
+        SelectedObjects.Remove(targetObject);
+        selectable.OnDeselect();
         GameObjectUtility.UnHighlight(targetObject);
     }
 
     public void Clear()
     {
-        for (int i = selectedObjects.Count - 1; i >= 0; i--)
+        for (int i = SelectedObjects.Count - 1; i >= 0; i--)
         {
-             Deselect(selectedObjects[i]);           
+            Deselect(SelectedObjects[i]);
         }
     }
 }

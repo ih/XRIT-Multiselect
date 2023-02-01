@@ -1,28 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using AbstractionMachines;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRMultiselectInteractor : XRDirectInteractor
 {
-    [SerializeField] private SelectManager _selectManager;
-    private bool _isSelecting;
-    
+    [SerializeField]
+    SelectManager _selectManager;
+    bool _isSelecting;
+
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
         base.OnHoverEntered(args);
         if (_isSelecting)
         {
-            _selectManager.Select(args.interactableObject.transform.gameObject);           
+            _selectManager.Select(args.interactableObject.transform.gameObject);
         }
     }
 
     public void OnTriggerPress()
     {
         enabled = true;
-        GetComponent<Renderer>().enabled = true; 
+        GetComponent<Renderer>().enabled = true;
         _isSelecting = true;
         if (interactablesHovered.Count == 0)
         {
@@ -32,7 +29,7 @@ public class XRMultiselectInteractor : XRDirectInteractor
         {
             foreach (IXRHoverInteractable hoveredObject in interactablesHovered)
             {
-                _selectManager.Select(((XRBaseInteractable) hoveredObject).gameObject);               
+                _selectManager.Select(((XRBaseInteractable)hoveredObject).gameObject);
             }
 
         }
