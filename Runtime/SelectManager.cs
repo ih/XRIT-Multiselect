@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AbstractionMachines;
 using UnityEngine;
 
@@ -7,11 +8,11 @@ public class SelectManager : MonoBehaviour
     [SerializeField]
     Color highlightColor = Color.green;
 
-    public List<GameObject> SelectedObjects { get; private set; }
+    public HashSet<GameObject> SelectedObjects { get; private set; }
 
     void Start()
     {
-        SelectedObjects = new List<GameObject>();
+        SelectedObjects = new HashSet<GameObject>();
     }
 
     public void Select(GameObject targetObject)
@@ -40,9 +41,10 @@ public class SelectManager : MonoBehaviour
 
     public void Clear()
     {
+        List<GameObject> selectedObjectsList = SelectedObjects.ToList();
         for (int i = SelectedObjects.Count - 1; i >= 0; i--)
         {
-            Deselect(SelectedObjects[i]);
+            Deselect(selectedObjectsList[i]);
         }
     }
 }

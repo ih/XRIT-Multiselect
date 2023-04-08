@@ -2,6 +2,7 @@
   "name": "abstractionmachines.multiselect",
   "references": [
     "Unity.XR.Interaction.Toolkit",
-    "abstractionmachines.gameobjectutility"
+    "abstractionmachines.gameobjectutility",
+    "Unity.InputSystem"
   ]
 }
