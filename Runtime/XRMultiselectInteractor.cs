@@ -1,73 +1,87 @@
+using System;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRMultiselectInteractor : XRDirectInteractor
+public class XRMultiselectInteractor : MonoBehaviour 
 {
     public InputAction trigger;
-    [SerializeField]
-    SelectManager _selectManager;
-    bool _isSelecting;
 
-    protected override void OnEnable()
+    [SerializeField] private SelectManager _selectManager;
+
+    private bool _isSelecting;
+
+
+    [SerializeField]
+    private float _selectorRadius;
+
+    protected void OnEnable()
     {
-        base.OnEnable();
         trigger.Enable();
         trigger.started += OnTriggerPress;
         trigger.canceled += OnTriggerRelease;
     }
 
-    private void OnTriggerRelease(InputAction.CallbackContext obj)
+    protected void OnDisable()
     {
-        OnTriggerRelease(); 
-    }
-
-    private void OnTriggerPress(InputAction.CallbackContext obj)
-    {
-        OnTriggerPress(); 
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
         trigger.Disable();
         OnTriggerRelease(default);
         trigger.started -= OnTriggerPress;
         trigger.canceled -= OnTriggerRelease;
     }
-    
-    protected override void OnHoverEntered(HoverEnterEventArgs args)
+
+    private void OnTriggerRelease(InputAction.CallbackContext obj)
     {
-        base.OnHoverEntered(args);
+        OnTriggerRelease();
+    }
+
+    private void OnTriggerPress(InputAction.CallbackContext obj)
+    {
+        OnTriggerPress();
+    }
+
+    private void Awake()
+    {
+        _selectorRadius = GetComponent<SphereCollider>().radius * transform.localScale.x;
+    }
+
+    private void Update()
+    {
         if (_isSelecting)
         {
-            _selectManager.Select(args.interactableObject.transform.gameObject);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, _selectorRadius);
+            foreach (Collider collider in colliders)
+            {
+                BaseSelectable selectable = collider.GetComponent<BaseSelectable>();
+                if (selectable != null)
+                {
+                    _selectManager.Select(selectable.gameObject); 
+                }
+            }
         }
     }
 
     public void OnTriggerPress()
     {
-        // enabled = true;
         GetComponent<Renderer>().enabled = true;
         _isSelecting = true;
-        if (interactablesHovered.Count == 0)
+        int hoverCount = 0;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _selectorRadius);
+        foreach (Collider collider in colliders)
         {
-            _selectManager.Clear();
-        }
-        else
-        {
-            foreach (IXRHoverInteractable hoveredObject in interactablesHovered)
+            if (collider.GetComponent<BaseSelectable>())
             {
-                _selectManager.Select(((XRBaseInteractable)hoveredObject).gameObject);
+                hoverCount += 1;
             }
-
-        }
+        } 
+        if (hoverCount == 0)
+            _selectManager.Clear();
     }
 
     public void OnTriggerRelease()
     {
         _isSelecting = false;
-        // enabled = false;
         GetComponent<Renderer>().enabled = false;
     }
 }

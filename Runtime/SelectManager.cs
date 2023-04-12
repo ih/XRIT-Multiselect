@@ -5,35 +5,30 @@ using UnityEngine;
 
 public class SelectManager : MonoBehaviour
 {
-    [SerializeField]
-    Color highlightColor = Color.green;
+    [SerializeField] private Color highlightColor = Color.green;
 
     public HashSet<GameObject> SelectedObjects { get; private set; }
 
-    void Start()
+    private void Start()
     {
         SelectedObjects = new HashSet<GameObject>();
     }
 
     public void Select(GameObject targetObject)
     {
-        ISelectable selectable = targetObject.GetComponent<ISelectable>();
-        if (selectable == null)
-        {
-            return;
-        }
+        var selectable = targetObject.GetComponent<ISelectable>();
+        if (selectable == null) return;
         SelectedObjects.Add(targetObject);
         selectable.OnSelect();
         GameObjectUtility.Highlight(targetObject, highlightColor);
+        // TODO add a delete event to ISeelctable objects and start listening here for it
+        // if object is deleted from SelectedObjects
     }
 
     public void Deselect(GameObject targetObject)
     {
-        ISelectable selectable = targetObject.GetComponent<ISelectable>();
-        if (selectable == null)
-        {
-            return;
-        }
+        var selectable = targetObject.GetComponent<ISelectable>();
+        if (selectable == null) return;
         SelectedObjects.Remove(targetObject);
         selectable.OnDeselect();
         GameObjectUtility.UnHighlight(targetObject);
@@ -41,10 +36,7 @@ public class SelectManager : MonoBehaviour
 
     public void Clear()
     {
-        List<GameObject> selectedObjectsList = SelectedObjects.ToList();
-        for (int i = SelectedObjects.Count - 1; i >= 0; i--)
-        {
-            Deselect(selectedObjectsList[i]);
-        }
+        var selectedObjectsList = SelectedObjects.ToList();
+        for (var i = SelectedObjects.Count - 1; i >= 0; i--) Deselect(selectedObjectsList[i]);
     }
 }
