@@ -53,10 +53,10 @@ public class XRMultiselectInteractor : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(transform.position, _selectorRadius);
             foreach (Collider collider in colliders)
             {
-                BaseSelectable selectable = collider.GetComponent<BaseSelectable>();
+                ISelectable selectable = collider.GetComponent<ISelectable>();
                 if (selectable != null)
                 {
-                    _selectManager.Select(selectable.gameObject); 
+                    _selectManager.Select(collider.gameObject); 
                 }
             }
         }
