@@ -19,4 +19,22 @@ public class BaseSelectable : MonoBehaviour, ISelectable
     public void OnDeselect()
     {
     }
+
+    public virtual void OnRightPrimaryActivate()
+    {
+    }
+
+    public virtual void OnRightSecondaryActivate()
+    {
+    }
+
+    public virtual string GetRightPrimaryLabel()
+    {
+        return "";
+    }
+
+    public virtual string GetRightSecondaryLabel()
+    {
+        return "";
+    }
 }
