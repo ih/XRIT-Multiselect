@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class SelectManager : MonoBehaviour
 {
-    [SerializeField] private Color highlightColor = Color.green;
+    [SerializeField] private Color highlightColor = Color.yellow;
 
     public HashSet<GameObject> SelectedObjects { get; private set; }
 

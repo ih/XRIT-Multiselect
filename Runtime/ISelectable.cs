@@ -10,4 +10,24 @@ public interface ISelectable
     string GetRightSecondaryLabel();
     
     string GetRightPrimaryLabel();
+
+    public void OnRightThumbstickRight()
+    {
+        
+    }
+    
+    public void OnRightThumbstickLeft()
+    {
+            
+    }
+    
+    public void OnRightThumbstickUp()
+    {
+                
+    }
+    
+    public void OnRightThumbstickDown()
+    {
+                
+    }
 }
